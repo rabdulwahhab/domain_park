@@ -1,0 +1,12 @@
+<section class="phx-hero">
+  <h1><%= @conn.host %></h1>
+  <p>This domain is for sale!</p>
+</section>
+
+<section class="row">
+  <article class="column inqueries">
+    <div style="text-align: center">
+      <%= link "Click here to view the listing!", to: "https://www.dynadot.com/market/listing/#{@conn.host}", class: "headliner" %>
+    </div>
+  </article>
+</section>

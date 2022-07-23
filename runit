@@ -1,0 +1,34 @@
+#!/bin/sh
+
+# TODO sperate out
+
+# This script builds the app for production release.
+
+PROD_DIR=~/domain_park_PROD
+export PORT=6767
+
+# git clone if not there
+# cd into
+
+
+mix deps.get --only prod
+
+# Setup
+MIX_ENV=prod mix compile
+
+#assets
+MIX_ENV=prod mix assets.deploy
+
+
+mix phx.gen.release
+
+MIX_ENV=prod mix release prod
+# MIX_ENV=prod mix release prod --path $PROD_DIR
+
+cd $PROD_DIR
+
+rm -rf domain_park
+
+
+
+bin/domain_park start
