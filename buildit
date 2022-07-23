@@ -3,29 +3,34 @@
 # This script builds the app for production release and sets the appropriate ENV vars
 # for subsequent application running.
 
-PROJ_DIR=~/domain_park
+PROJ_DIR="$0"
 
-if [ ! -e $PROJ_DIR ]; then
-    git clone git@github.com:rabdwhb/domain_park.git
-fi
+echo "=== STARTING BUILD + DEPLOY SETUP!"
 
-cd $PROJ_DIR
+read -p "=== Which port will the app run on? " sel_port
+export PORT=$sel_port
 
+echo "=== Generating secret key base..."
 export SECRET_KEY_BASE=$(mix phx.gen.secret)
 
+echo "=== Getting dependencies..."
 mix deps.get --only prod
 
+echo "=== Compiling application..."
 MIX_ENV=prod mix compile
 
+echo "=== Building/Packaging assets..."
 MIX_ENV=prod mix assets.deploy
 
-mix phx.gen.release
+echo "=== Creating production release..."
+mix phx.gen.release --no-ecto
 
-PROD_DIR=../$(echo -n $PROJ_DIR)_PROD
-MIX_ENV=prod mix release prod --path $PROD_DIR
+read -p "=== Clean up source files? [y/n] " answer
 
-cd ..
+if [ "$answer" = "y" ]; then
+    echo "=== Cleaning up source files..."
+    cd ..
+    rm -rf $PROJ_DIR
+fi
 
-rm -rf $PROJ_DIR
-
-echo "Production built successfully! cd into $PROD_DIR to run"
+echo "=== Production built successfully!"

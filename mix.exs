@@ -4,12 +4,6 @@ defmodule DomainPark.MixProject do
   def project do
     [
       app: :domain_park,
-      default_release: :prod,
-      releases: [
-        prod: [
-          include_executables_for: [:unix],
-        ]
-      ],
       version: "0.1.0",
       elixir: "~> 1.13",
       elixirc_paths: elixirc_paths(Mix.env()),
