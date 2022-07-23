@@ -6,7 +6,7 @@
 PROJ_DIR=~/domain_park
 
 if [ ! -e $PROJ_DIR ]; then
-    git clone TODO
+    git clone git@github.com:rabdwhb/domain_park.git
 fi
 
 cd $PROJ_DIR
