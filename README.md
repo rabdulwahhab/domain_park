@@ -1,4 +1,4 @@
-# DomainPark
+# DomainPark - EZ domain parking web app
 
 To start your Phoenix server:
 
