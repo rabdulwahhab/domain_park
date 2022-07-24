@@ -3,24 +3,24 @@
 # This script builds the app for production release and sets the appropriate ENV vars
 # for subsequent application running.
 
-echo "=== STARTING BUILD + DEPLOY SETUP!"
+echo ">>> STARTING BUILD + DEPLOY SETUP!"
 
-read -p "=== Which port will the app run on? " sel_port
+read -p ">>> Which port will the app run on? " sel_port
 export PORT=$sel_port
 
-echo "=== Getting dependencies..."
+echo ">>> Getting dependencies..."
 mix deps.get
 
-echo "=== Generating secret key base..."
+echo ">>> Generating secret key base..."
 export SECRET_KEY_BASE=$(mix phx.gen.secret)
 
-echo "=== Compiling application..."
+echo ">>> Compiling application..."
 MIX_ENV=prod mix compile
 
-echo "=== Building/Packaging assets..."
+echo ">>> Building/Packaging assets..."
 MIX_ENV=prod mix assets.deploy
 
-echo "=== Creating production release..."
+echo ">>> Creating production release..."
 mix phx.gen.release --no-ecto
 
 PROD_NAME=$(pwd | xargs basename)_PROD
@@ -28,13 +28,13 @@ PROD_DIR=$(pwd | xargs dirname)/$PROD_NAME
 
 MIX_ENV=prod mix release --path $PROD_DIR
 
-read -p "=== Clean up source files? [y/n] " answer
+read -p ">>> Clean up source files? [y/n] " answer
 
 if [ "$answer" = "y" ]; then
-    echo "=== Cleaning up source files..."
+    echo ">>> Cleaning up source files..."
     SRC_DIR=$(pwd)
     cd ..
     rm -rf $SRC_DIR
 fi
 
-echo "=== Production built successfully!"
+echo ">>> Production built successfully!"
