@@ -10,11 +10,11 @@ echo "=== STARTING BUILD + DEPLOY SETUP!"
 read -p "=== Which port will the app run on? " sel_port
 export PORT=$sel_port
 
-echo "=== Generating secret key base..."
-export SECRET_KEY_BASE=$(mix phx.gen.secret)
-
 echo "=== Getting dependencies..."
 mix deps.get --only prod
+
+echo "=== Generating secret key base..."
+export SECRET_KEY_BASE=$(mix phx.gen.secret)
 
 echo "=== Compiling application..."
 MIX_ENV=prod mix compile
