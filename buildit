@@ -28,8 +28,8 @@ mix phx.gen.release --no-ecto
 MIX_ENV=prod mix release --path $PROD_DIR
 
 # Setup app environment
-echo "PORT=$sel_port" > $PROD_DIR/.env
-echo -n "SECRET_KEY_BASE=$SECRET_KEY_BASE" >> $PROD_DIR/.env
+echo "export PORT=$sel_port" > $PROD_DIR/.env
+echo -n "export SECRET_KEY_BASE=$SECRET_KEY_BASE" >> $PROD_DIR/.env
 
 read -p ">>> Clean up source files? [y/n] " answer
 
