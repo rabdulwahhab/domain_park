@@ -9,13 +9,12 @@ PROD_DIR=$(pwd | xargs dirname)/$PROD_NAME
 echo ">>> STARTING BUILD + DEPLOY SETUP!"
 
 read -p ">>> Which port will the app run on? " sel_port
-echo "PORT=$sel_port" > $PROD_DIR/.env
 
 echo ">>> Getting dependencies..."
 mix deps.get
 
 echo ">>> Generating secret key base..."
-echo -n "SECRET_KEY_BASE=$(mix phx.gen.secret)" >> $PROD_DIR/.env
+SECRET_KEY_BASE=$(mix phx.gen.secret)
 
 echo ">>> Compiling application..."
 MIX_ENV=prod mix compile
@@ -27,6 +26,10 @@ echo ">>> Creating production release..."
 mix phx.gen.release --no-ecto
 
 MIX_ENV=prod mix release --path $PROD_DIR
+
+# Setup app environment
+echo "PORT=$sel_port" > $PROD_DIR/.env
+echo -n "SECRET_KEY_BASE=$SECRET_KEY_BASE" >> $PROD_DIR/.env
 
 read -p ">>> Clean up source files? [y/n] " answer
 
