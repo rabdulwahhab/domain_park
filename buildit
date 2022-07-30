@@ -13,11 +13,11 @@ read -p ">>> Which port will the app run on? " sel_port
 echo ">>> Getting dependencies..."
 mix deps.get
 
-echo ">>> Generating secret key base..."
-SECRET_KEY_BASE=$(mix phx.gen.secret)
-
 echo ">>> Compiling application..."
 MIX_ENV=prod mix compile
+
+echo ">>> Generating secret key base..."
+SECRET_KEY_BASE=$(mix phx.gen.secret)
 
 echo ">>> Building/Packaging assets..."
 MIX_ENV=prod mix assets.deploy
