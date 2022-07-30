@@ -17,7 +17,7 @@ echo ">>> Compiling application..."
 MIX_ENV=prod mix compile
 
 echo ">>> Generating secret key base..."
-SECRET_KEY_BASE=$(mix phx.gen.secret)
+SECRET_KEY_BASE=$(MIX_ENV=prod mix phx.gen.secret)
 
 echo ">>> Building/Packaging assets..."
 MIX_ENV=prod mix assets.deploy
