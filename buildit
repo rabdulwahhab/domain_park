@@ -3,16 +3,19 @@
 # This script builds the app for production release and sets the appropriate ENV vars
 # for subsequent application running.
 
+PROD_NAME=$(pwd | xargs basename)_PROD
+PROD_DIR=$(pwd | xargs dirname)/$PROD_NAME
+
 echo ">>> STARTING BUILD + DEPLOY SETUP!"
 
 read -p ">>> Which port will the app run on? " sel_port
-export PORT=$sel_port
+echo "PORT=$sel_port" > $PROD_DIR/.env
 
 echo ">>> Getting dependencies..."
 mix deps.get
 
 echo ">>> Generating secret key base..."
-export SECRET_KEY_BASE=$(mix phx.gen.secret)
+echo -n "SECRET_KEY_BASE=$(mix phx.gen.secret)" >> $PROD_DIR/.env
 
 echo ">>> Compiling application..."
 MIX_ENV=prod mix compile
@@ -22,9 +25,6 @@ MIX_ENV=prod mix assets.deploy
 
 echo ">>> Creating production release..."
 mix phx.gen.release --no-ecto
-
-PROD_NAME=$(pwd | xargs basename)_PROD
-PROD_DIR=$(pwd | xargs dirname)/$PROD_NAME
 
 MIX_ENV=prod mix release --path $PROD_DIR
 
