@@ -13,3 +13,14 @@ Last, run the `domain_park` binary.
 ## Important notes
 1. You will need Elixir installed on the target
 2. Unless deploying right on the web, configure your reverse-proxy in front of the app to statically set the `Host` header in Requests to this app so it works correctly
+    - E.g. Nginx.conf
+    ```
+    ...
+    location / {
+      # Set Host header to the domain for all requests to the app
+      set_proxy_header Host domainnamebeingparked.com;
+      proxy_pass http://localhost:PORT;
+    }
+    ...
+    ```
+    
